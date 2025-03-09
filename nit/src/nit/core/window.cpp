@@ -115,12 +115,6 @@ namespace nit
         glfwSetWindowShouldClose(window->handler, true);
     }
 
-    void window_update()
-    {
-        glfwPollEvents();
-        glfwSwapBuffers(window->handler);
-    }
-
     void window_set_title(const String& new_title)
     {
         NIT_CHECK_WINDOW_INITIALIZED
@@ -159,6 +153,8 @@ namespace nit
     bool window_should_close()
     {
         NIT_CHECK_WINDOW_INITIALIZED
+        glfwSwapBuffers(window->handler);
+        glfwPollEvents();
         return glfwWindowShouldClose(window->handler);
     }
 

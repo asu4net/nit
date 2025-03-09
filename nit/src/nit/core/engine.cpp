@@ -224,9 +224,7 @@ namespace nit
             event_broadcast(engine_event(Stage::PostDraw));
 
             NIT_IF_EDITOR_ENABLED(editor_end());
-            NIT_IF_EDITOR_ENABLED(im_gui_end(window_get_size()));
-            
-            window_update();
+            NIT_IF_EDITOR_ENABLED(im_gui_end(window_get_size()));            
         }
 
         event_broadcast(engine_event(Stage::End));

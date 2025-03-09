@@ -38,7 +38,6 @@ namespace nit
     void        window_init(const WindowCfg& cfg = {});
     void        window_finish();
     void        window_close();
-    void        window_update();
         
     void        window_set_title(const String& new_title);
     void        window_set_v_sync(bool enabled);
