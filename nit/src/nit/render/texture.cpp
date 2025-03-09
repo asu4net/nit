@@ -260,7 +260,11 @@ namespace nit
 
     void texture_2d_free(Texture2D* texture)
     {
-        glDeleteTextures(1, &texture->id);
+        if (texture->id)
+        {
+            glDeleteTextures(1, &texture->id);
+        }
+
         texture->id = 0;
         FreeTextureImage(texture);
     }
