@@ -19,7 +19,7 @@ namespace nit
         i32         width           = 1280;
         i32         height          = 720;
         bool        v_sync          = true;
-        bool        start_maximized = true;
+        bool        start_maximized = false;
         CursorMode  cursor_mode     = CursorMode::Normal;
         bool        render_api_logs = false;
     };
