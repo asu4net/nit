@@ -24,6 +24,7 @@
 #include "render/flipbook.h"
 #include "input/input_modifiers.h"
 #include "physics/collision_category.h"
+#include "particles/particles.h"
 
 #define NIT_CHECK_ENGINE_CREATED NIT_CHECK_MSG(nit::engine, "Forget to call SetAppInstance!");
 
@@ -112,7 +113,6 @@ namespace nit
 
         entity_registry_set_instance(&engine->entity_registry);
         entity_registry_init();
-        
         {
             register_transform_component();
             register_camera_component();
@@ -126,7 +126,11 @@ namespace nit
             register_trigger_events_component();
             register_flipbook_animation_component();
             register_collision_category_component();
+            register_particle_emitter_component();
         }
+
+        particle_registry_set_instance(&engine->particle_registry);
+        particle_registry_init();
 
         input_registry_set_instance(&engine->input_registry);
         input_registry_init();
@@ -224,7 +228,7 @@ namespace nit
             event_broadcast(engine_event(Stage::PostDraw));
 
             NIT_IF_EDITOR_ENABLED(editor_end());
-            NIT_IF_EDITOR_ENABLED(im_gui_end(window_get_size()));            
+            NIT_IF_EDITOR_ENABLED(im_gui_end(window_get_size()));
         }
 
         event_broadcast(engine_event(Stage::End));

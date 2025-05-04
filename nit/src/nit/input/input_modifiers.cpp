@@ -61,7 +61,10 @@ namespace nit
     {
         if (input_type == InputType::Digital) return;
 
-        input_value = input_value * input_modifier->scalar;
+        input_value.x = input_value.x * input_modifier->scalar.x;
+        input_value.y = input_value.y * input_modifier->scalar.y;
+        input_value.z = input_value.z * input_modifier->scalar.z;
+        input_value.w = input_value.w * input_modifier->scalar.w;
     }
 
     void modify_input(const InputModifierAdd* input_modifier, Vector4& input_value, InputType input_type)

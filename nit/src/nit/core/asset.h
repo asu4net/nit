@@ -79,7 +79,7 @@ namespace nit
     void           asset_build_path              (const String& name, String& path);
     void           asset_push_info               (AssetInfo& asset_info, u32 index, bool build_path);
     void           asset_erase_info              (AssetInfo& asset_info, SparseSetDeletion deletion);
-    AssetInfo*     asset_get_info                (AssetHandle& asset);
+    AssetInfo*     asset_get_info                (const AssetHandle& asset);
     AssetHandle    asset_deserialize_from_string (const String& asset_str);
     AssetHandle    asset_deserialize_from_file   (const String& file_path);
     void           asset_serialize_to_string     (AssetHandle& asset, String& result);
@@ -90,12 +90,12 @@ namespace nit
     void           asset_find_by_name            (const String& name, Array<AssetHandle>& assets);
     AssetHandle    asset_find_by_name            (const String& name);
     void           asset_find_by_type            (Type* type, Array<AssetHandle>& assets);
-    bool           asset_valid                   (AssetHandle& asset);
-    bool           asset_loaded                  (AssetHandle& asset);
+    bool           asset_valid                   (const AssetHandle& asset);
+    bool           asset_loaded                  (const AssetHandle& asset);
     AssetHandle    asset_create                  (Type* type, const String& name, const String& path, void* data = nullptr);
-    void           asset_load                    (AssetHandle& asset, bool force_reload = false);
-    void           asset_retain                  (AssetHandle& asset);
-    void           asset_free                    (AssetHandle& asset);
+    void           asset_load                    (const AssetHandle& asset, bool force_reload = false);
+    void           asset_retain                  (const AssetHandle& asset);
+    void           asset_free                    (const AssetHandle& asset);
     void           asset_release                 (AssetHandle& asset, bool force_free = false);
     void           asset_destroy                 (AssetHandle& asset);
     
@@ -103,7 +103,7 @@ namespace nit
     template<typename T>   AssetPool*  asset_get_pool         ();
     template<typename T>   bool        asset_type_registered  ();
     template<typename T>   u32         asset_get_last_version ();
-    template<typename T>   T*          asset_get_data         (AssetHandle& asset);
+    template<typename T>   T*          asset_get_data         (const AssetHandle& asset);
     template<typename T>   AssetHandle asset_create           (const String& name, const String& path = "", const T& data = {});
 }
 

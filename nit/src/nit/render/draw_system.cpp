@@ -15,6 +15,7 @@
 #include "physics/rigidbody_2d.h"
 #include "render/camera.h"
 #include "render/transform.h"
+#include "particles/particles.h"
 
 namespace nit
 {
@@ -187,6 +188,74 @@ namespace nit
         return ListenerAction::StayListening;
     }
     
+    static void draw_sprite(const Transform& transform, const Sprite& sprite, EntityID entity = NULL_ENTITY)
+    {
+        if (!sprite.visible || sprite.tint.w <= F32_EPSILON)
+        {
+            return;
+        }
+
+        bool has_texture = asset_valid(sprite.texture);
+
+        Texture2D* texture_data = has_texture ? asset_get_data<Texture2D>(sprite.texture) : nullptr;
+
+        if (has_texture)
+        {
+            if (!asset_loaded(sprite.texture))
+            {
+                asset_retain(sprite.texture);
+            }
+
+            Vector2 size = texture_data->size;
+
+            if (texture_data->sub_textures
+                && sprite.sub_texture_index >= 0
+                && (u32)sprite.sub_texture_index < texture_data->sub_texture_count)
+            {
+                const SubTexture2D& sub_texture = texture_data->sub_textures[sprite.sub_texture_index];
+                size = sub_texture.size;
+
+                fill_quad_vertex_u_vs(
+                    vertex_uvs
+                    , texture_data->size
+                    , sub_texture.size
+                    , sub_texture.location
+                    , sprite.flip_x
+                    , sprite.flip_y
+                    , sprite.tiling_factor);
+            }
+            else
+            {
+                vertex_uvs = DEFAULT_VERTEX_U_VS_2D;
+
+                fill_quad_vertex_u_vs(
+                    vertex_uvs
+                    , sprite.flip_x
+                    , sprite.flip_y
+                    , sprite.tiling_factor);
+            }
+
+            if (sprite.keep_aspect)
+            {
+                fill_quad_vertex_positions(size, vertex_positions);
+            }
+            else
+            {
+                vertex_positions = DEFAULT_VERTEX_POSITIONS_2D;
+            }
+
+            transform_vertex_positions(vertex_positions, transform_to_matrix(transform, entity));
+        }
+        else
+        {
+            vertex_positions = DEFAULT_VERTEX_POSITIONS_2D;
+            transform_vertex_positions(vertex_positions, transform_to_matrix(transform, entity));
+        }
+
+        fill_vertex_colors(vertex_colors, sprite.tint);
+        draw_quad(texture_data, vertex_positions, vertex_uvs, vertex_colors, (i32)entity);
+    }
+
     ListenerAction draw()
     {
         // Sprite sorting
@@ -206,6 +275,16 @@ namespace nit
         
         begin_scene_2d(scene_2d);
         {
+            // Particles
+            const ParticleRegistry* particle_registry = particle_registry_get_instance();
+            const ParticleData* particle_pool = (const ParticleData*)(particle_registry->particles.elements);
+            for (u32 i = 0; i < particle_registry->particles.sparse_set.count; ++i)
+            {
+                if (!&particle_pool[i] || !particle_pool[i].enabled) continue;
+
+                draw_sprite(particle_pool[i].transform, particle_pool[i].sprite);
+            }
+
             for (EntityID entity : sorted_sprite_group)
             {
                 if (!entity_global_enabled(entity))
@@ -216,70 +295,7 @@ namespace nit
                 auto& transform = entity_get<Transform>(entity);
                 auto& sprite = entity_get<Sprite>(entity);
 
-                if (!sprite.visible || sprite.tint.w <= F32_EPSILON)
-                {
-                    continue;
-                }
-
-                bool has_texture = asset_valid(sprite.texture); 
-
-                Texture2D* texture_data = has_texture ? asset_get_data<Texture2D>(sprite.texture) : nullptr; 
-                
-                if (has_texture)
-                {
-                    if (!asset_loaded(sprite.texture))
-                    {
-                        asset_retain(sprite.texture);
-                    }
-                    
-                    Vector2 size = texture_data->size;
-
-                    if (texture_data->sub_textures
-                        && sprite.sub_texture_index >= 0
-                        && (u32) sprite.sub_texture_index < texture_data->sub_texture_count)
-                    {
-                        const SubTexture2D& sub_texture = texture_data->sub_textures[sprite.sub_texture_index];
-                        size = sub_texture.size;
-                        
-                        fill_quad_vertex_u_vs(
-                              vertex_uvs
-                            , texture_data->size
-                            , sub_texture.size
-                            , sub_texture.location
-                            , sprite.flip_x
-                            , sprite.flip_y
-                            , sprite.tiling_factor);
-                    }
-                    else
-                    {
-                        vertex_uvs = DEFAULT_VERTEX_U_VS_2D;
-                        
-                        fill_quad_vertex_u_vs(
-                          vertex_uvs
-                        , sprite.flip_x
-                        , sprite.flip_y
-                        , sprite.tiling_factor);
-                    }
-
-                    if (sprite.keep_aspect)
-                    {
-                        fill_quad_vertex_positions(size , vertex_positions);
-                    }
-                    else
-                    {
-                        vertex_positions = DEFAULT_VERTEX_POSITIONS_2D;
-                    }
-                    
-                    transform_vertex_positions(vertex_positions, transform_to_matrix(transform, entity));
-                }
-                else
-                {
-                    vertex_positions = DEFAULT_VERTEX_POSITIONS_2D;
-                    transform_vertex_positions(vertex_positions, transform_to_matrix(transform, entity));
-                }
-                
-                fill_vertex_colors(vertex_colors, sprite.tint);
-                draw_quad(texture_data, vertex_positions, vertex_uvs, vertex_colors, (i32) entity);
+                draw_sprite(transform, sprite);
             }
 
             for (EntityID entity : entity_get_group<Line2D, Transform>().entities)

@@ -23,6 +23,7 @@ namespace nit
     bool     operator!=(const Vector3& a, const Vector3& b);
     Vector3  operator+(const Vector3& a, const Vector3& b);
     Vector3  operator-(const Vector3& a, const Vector3& b);
+    Vector3  operator*(const Vector3& a, const Vector3& b);
     Vector3  operator*(const Vector3& vector, f32 num);
     Vector3  operator/(const Vector3& vector, f32 num);
     Vector3& operator+=(Vector3& left, const Vector3& right);
@@ -33,7 +34,7 @@ namespace nit
     Vector3        look_rotation(const Vector3& rotation, const Vector3& dir);
     inline Vector3 to_degrees(const Vector3& radians) { return radians * RADIANS_TO_DEGREES_FACTOR; }
     inline Vector3 to_radians(const Vector3& degrees) { return degrees * DEGREES_TO_RADIANS_FACTOR; }
-    f32            lenght(const Vector3& val);
+    f32            length(const Vector3& val);
     
     template<>
     inline Vector3 abs(const Vector3& val) { return { abs(val.x), abs(val.y), abs(val.z)  }; }

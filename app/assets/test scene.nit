@@ -54,9 +54,9 @@ Scene:
       Name: Entity 3
       UUID: 15947148584510532775
       Transform:
-        position: [-1.24156487, 0.791888177, -6.10351562e-05]
-        rotation: [0, 0, 177.998535]
-        scale: [0.999957681, 0.999957681, 1]
+        position: [-1.62061095, 0.87227118, -6.10351562e-05]
+        rotation: [0, 0, 178.006943]
+        scale: [0.999954998, 0.999954998, 1]
       Circle:
         visible: true
         tint: [0.300000012, 1, 0.300000012, 1]
@@ -98,7 +98,7 @@ Scene:
           Name: Entity 6
           UUID: 1006179946922367591
           Transform:
-            position: [2.1666348, -1.33121252, 0]
+            position: [2.28609705, -1.59341884, 0]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
           Sprite:
@@ -112,6 +112,16 @@ Scene:
             tiling_factor: [1, 1]
             keep_aspect: true
             draw_layer: 0
+          ParticleEmitter:
+            texture: ["", "", 0]
+            pos_amplitude: [0.100000001, 0.100000001, 0]
+            scale: [0.150000006, 0.150000006, 1]
+            velocity: [0, 0, 0]
+            vel_amplitude: [1, 1, 1]
+            tint: [0.300000012, 1, 0.300000012, 1]
+            tint_amplitude: [0.5, 0.5, 0.5, 0]
+            starting_life: 1
+            cooldown: 0.00999999978
         Entity:
           Enabled: true
           Name: Entity 5
@@ -162,7 +172,7 @@ Scene:
         keep_aspect: true
         draw_layer: 0
       CollisionCategory:
-        collision_flags: [dsad, CollisionFlags, 9016404635126672180]
+        collision_flags: ["", "", 0]
         name: PLAYER
       Children:
         Entity:
@@ -170,7 +180,7 @@ Scene:
           Name: Entity 6
           UUID: 3087825785419620970
           Transform:
-            position: [2.1666348, -1.33121252, 0]
+            position: [3.69729519, -1.39736569, 0]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
           Sprite:

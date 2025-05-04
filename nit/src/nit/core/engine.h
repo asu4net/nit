@@ -8,6 +8,7 @@
 #include "nit/render/render_objects.h"
 #include "nit/audio/audio.h"
 #include "nit/physics/physics_2d.h"
+#include "nit/particles/particles.h"
 
 #ifdef NIT_EDITOR_ENABLED
 #include "nit/editor/editor.h"
@@ -36,15 +37,16 @@ namespace nit
     {
         EngineEvent    events[(u8) Stage::Count];
         
-        Window         window;
-        TypeRegistry   type_registry;
-        RenderObjects  render_objects;
-        Renderer2D     renderer_2d;
-        AssetRegistry  asset_registry;
-        EntityRegistry entity_registry;
-        InputRegistry  input_registry;
-        AudioRegistry  audio_registry;
-        Physics2D      physics_2d;
+        Window           window;
+        TypeRegistry     type_registry;
+        RenderObjects    render_objects;
+        Renderer2D       renderer_2d;
+        AssetRegistry    asset_registry;
+        EntityRegistry   entity_registry;
+        ParticleRegistry particle_registry;
+        InputRegistry    input_registry;
+        AudioRegistry    audio_registry;
+        Physics2D        physics_2d;
         
         NIT_IF_EDITOR_ENABLED(ImGuiRenderer  im_gui_renderer);
         NIT_IF_EDITOR_ENABLED(Editor editor);

@@ -27,6 +27,11 @@ namespace nit
         return { vector.x * num, vector.y * num, vector.z * num };
     }
 
+    Vector3 operator*(const Vector3& a, const Vector3& b)
+    {
+        return { a.x * b.x, a.y * b.y, a.z * b.z };
+    }
+
     Vector3 operator/(const Vector3& vector, f32 num)
     {
         return { vector.x / num, vector.y / num, vector.z / num };
@@ -73,7 +78,7 @@ namespace nit
         return { look_rot.x, look_rot.y, look_rot.z };
     }
 
-    f32 lenght(const Vector3& val)
+    f32 length(const Vector3& val)
     {
         return std::sqrt(val.x * val.x + val.y * val.y + val.z * val.z);
     }

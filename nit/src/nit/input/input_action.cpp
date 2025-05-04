@@ -409,12 +409,13 @@ namespace nit
         enum_register_value<TriggerType>("Released", TriggerType::Released);
 
         u32 max_input_actions = input_registry_get_instance()->max_input_actions;
-        asset_register_type<InputAction>({
-            .fn_serialize = serialize,
-            .fn_deserialize = deserialize,
-            NIT_IF_EDITOR_ENABLED(.fn_draw_editor = draw_editor),
-            .max_elements = max_input_actions,
-            });
+        
+        AssetTypeArgs<InputAction> args;
+        args.fn_serialize = serialize;
+        args.fn_deserialize = deserialize;
+        NIT_IF_EDITOR_ENABLED(args.fn_draw_editor = draw_editor);
+        args.max_elements = max_input_actions;
+        asset_register_type<InputAction>(args);
     }
 
     

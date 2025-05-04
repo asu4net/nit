@@ -8,7 +8,7 @@
 
 namespace nit
 {
-    Matrix4 transform_to_matrix(Transform& transform, EntityID entity_id)
+    Matrix4 transform_to_matrix(const Transform& transform, EntityID entity_id)
     {
         const Matrix4 child_matrix = mat_create_transform(transform.position, transform.rotation, transform.scale);
 

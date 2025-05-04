@@ -315,9 +315,9 @@ namespace nit
             { local_matrix.m[2][0], local_matrix.m[2][1], local_matrix.m[2][2] }
         };
 
-        scale.x = lenght(row[0]);
-        scale.y = lenght(row[1]);
-        scale.z = lenght(row[2]);
+        scale.x = length(row[0]);
+        scale.y = length(row[1]);
+        scale.z = length(row[2]);
 
         row[0] = normalize(row[0]);
         row[1] = normalize(row[1]);

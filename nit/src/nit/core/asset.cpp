@@ -100,7 +100,7 @@ namespace nit
         return pool;
     }
 
-    AssetPool* asset_get_pool_safe(AssetHandle& asset)
+    AssetPool* asset_get_pool_safe(const AssetHandle& asset)
     {
         NIT_CHECK(asset.id.data != 0);
         return asset_get_pool_safe(asset.type);
@@ -150,7 +150,7 @@ namespace nit
         pool->asset_infos[deletion.deleted_slot] = pool->asset_infos[deletion.last_slot];
     }
 
-    AssetInfo* asset_get_info(AssetHandle& asset)
+    AssetInfo* asset_get_info(const AssetHandle& asset)
     {
         AssetPool* pool = asset_get_pool_safe(asset);
 
@@ -162,7 +162,7 @@ namespace nit
         return &pool->asset_infos[ pool_index_of(&pool->data_pool, asset.data_id)];
     }
 
-    AssetInfo* GetAssetInfoSafe(AssetHandle& asset)
+    AssetInfo* GetAssetInfoSafe(const AssetHandle& asset)
     {
         AssetInfo* info = asset_get_info(asset);
         if (!info)
@@ -366,7 +366,7 @@ namespace nit
         }
     }
 
-    bool asset_valid(AssetHandle& asset)
+    bool asset_valid(const AssetHandle& asset)
     {
         AssetPool* pool = asset_get_pool(asset.type);
         if (!pool)
@@ -376,7 +376,7 @@ namespace nit
         return pool_is_valid(&pool->data_pool, asset.data_id);
     }
     
-    bool asset_loaded(AssetHandle& asset)
+    bool asset_loaded(const AssetHandle& asset)
     {
         if (!asset_valid(asset))
         {
@@ -420,7 +420,7 @@ namespace nit
         asset_registry->id_to_data_id.erase(asset.id);
     }
 
-    void asset_load(AssetHandle& asset, bool force_reload)
+    void asset_load(const AssetHandle& asset, bool force_reload)
     {
         AssetPool* pool = asset_get_pool_safe(asset);
         AssetInfo* info = GetAssetInfoSafe(asset);
@@ -444,7 +444,7 @@ namespace nit
         load(asset.type, pool_get_raw_data(&pool->data_pool, asset.data_id));
     }
 
-    void asset_free(AssetHandle& asset)
+    void asset_free(const AssetHandle& asset)
     {
         AssetPool* pool = asset_get_pool_safe(asset);
         AssetInfo* info = GetAssetInfoSafe(asset);
@@ -453,7 +453,7 @@ namespace nit
         type_release(asset.type, pool_get_raw_data(&pool->data_pool, asset.data_id));
     }
 
-    void asset_retain(AssetHandle& asset)
+    void asset_retain(const AssetHandle& asset)
     {
         if (!asset_valid(asset))
         {

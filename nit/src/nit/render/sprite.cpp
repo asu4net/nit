@@ -10,7 +10,7 @@
 namespace nit
 {
     void serialize(const Sprite* sprite, YAML::Emitter& emitter)
-    {                                         
+    {
         emitter << YAML::Key << "texture"       << YAML::Value << sprite->texture;
         emitter << YAML::Key << "sub_texture"   << YAML::Value << sprite->sub_texture;
         emitter << YAML::Key << "visible"       << YAML::Value << sprite->visible;
@@ -22,7 +22,7 @@ namespace nit
         emitter << YAML::Key << "keep_aspect"   << YAML::Value << sprite->keep_aspect;
         emitter << YAML::Key << "draw_layer"    << YAML::Value << sprite->draw_layer;
     }
-    
+
     void deserialize(Sprite* sprite, const YAML::Node& node)
     {
         sprite->texture       = node["texture"]       .as<AssetHandle>();
@@ -41,7 +41,7 @@ namespace nit
     void draw_editor(Sprite* sprite)
     {
         editor_draw_asset_combo("Texture", type_get<Texture2D>(), &sprite->texture);
-        
+
         if (asset_valid(sprite->texture))
         {
             Texture2D* texture = asset_get_data<Texture2D>(sprite->texture);

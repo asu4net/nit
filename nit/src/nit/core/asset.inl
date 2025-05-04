@@ -45,7 +45,7 @@ namespace nit
     }
     
     template<typename T>
-    T* asset_get_data(AssetHandle& asset)
+    T* asset_get_data(const AssetHandle& asset)
     {
         AssetPool* pool = asset_get_pool_safe(type_get<T>());
         return pool_get_data<T>(&pool->data_pool, asset.data_id);

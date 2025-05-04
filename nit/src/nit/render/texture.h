@@ -38,7 +38,7 @@ namespace nit
         u8*           pixel_data        = nullptr;
         Vector2       size;
         u32           channels          = 0;
-        String        image_path;       
+        String        image_path;
         MagFilter     mag_filter        = MagFilter::Linear;
         MinFilter     min_filter        = MinFilter::Linear;
         WrapMode      wrap_mode_u       = WrapMode::Repeat;
