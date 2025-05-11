@@ -3,6 +3,15 @@
 
 namespace nit
 {
+    enum class SceneStage : u8
+    {
+          Load
+        , Unload
+    };
+
+    using SceneEvent = Event<const Array<EntityID>&>;
+    using SceneListener = Listener<const Array<EntityID>&>;
+
     struct Scene
     {
         String cached_scene;
@@ -18,4 +27,5 @@ namespace nit
     void scene_save_entities(Scene* scene);
     void scene_free_entities(Scene* scene);
     void scene_load_entities(Scene* scene);
+    SceneEvent& scene_event(SceneStage stage);
 }

@@ -57,6 +57,9 @@ namespace nit
     template<>
     f32 distance(const Vector3& a, const Vector3& b);
 
+    template<>
+    f32 sqrd_distance(const Vector3& a, const Vector3& b);
+
     Vector3 to_v3(const struct Vector2& value);
 }
 

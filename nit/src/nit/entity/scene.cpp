@@ -33,7 +33,7 @@ namespace nit
         // More items to serialize
         serialize_entities(scene, emitter);
     }
-
+    
     void scene_deserialize(Scene* scene, const YAML::Node& node)
     {
         StringStream ss;
@@ -44,10 +44,15 @@ namespace nit
     void scene_load(Scene* scene)
     {
         scene_load_entities(scene);
+
+        event_broadcast<const Array<EntityID>&>(scene_event(SceneStage::Load), scene->entities);
     }
 
     void scene_free(Scene* scene)
     {
+        // uuuh maybe should specify which scene was loaded/unloaded
+        event_broadcast<const Array<EntityID>&>(scene_event(SceneStage::Unload), scene->entities);
+
         scene_free_entities(scene);
     }
 
@@ -89,5 +94,13 @@ namespace nit
             EntityID entity = entity_deserialize(entity_node_value);
             scene->entities.push_back(entity);
         }
+    }
+
+    // me la suda
+    static SceneEvent scene_events[2];
+
+    SceneEvent& scene_event(SceneStage stage)
+    {
+        return scene_events[(u8)stage];
     }
 }

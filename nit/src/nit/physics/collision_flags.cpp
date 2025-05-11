@@ -145,7 +145,7 @@ void draw_editor(CollisionFlags* flags)
 }
 #endif
 
-CollisionCategoryData collision_flags_get_category_data(CollisionFlags* flags, const String& mask_name)
+CollisionCategoryData collision_flags_get_category_data(const CollisionFlags* flags, const String& mask_name)
 {
     NIT_CHECK(flags);
     for (u32 i = 0; i < flags->count; ++i)

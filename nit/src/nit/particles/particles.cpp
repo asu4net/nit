@@ -222,7 +222,7 @@ namespace nit
             emitter_data.current_cooldown -= delta_seconds();
             while (emitter_data.current_cooldown <= 0)
             {
-                emitter_data.current_cooldown += emitter_data.cooldown == 0 ? 0.1 : emitter_data.cooldown; // You will believe what caused this
+                emitter_data.current_cooldown += emitter_data.cooldown == 0 ? 0.1f : emitter_data.cooldown; // You will believe what caused this
                 spawn_particle(emitter);
             }
         }

@@ -8,6 +8,7 @@
 #include "nit/render/render_objects.h"
 #include "nit/audio/audio.h"
 #include "nit/physics/physics_2d.h"
+#include "nit/physics/collision_2d.h"
 #include "nit/particles/particles.h"
 
 #ifdef NIT_EDITOR_ENABLED
@@ -47,6 +48,7 @@ namespace nit
         InputRegistry    input_registry;
         AudioRegistry    audio_registry;
         Physics2D        physics_2d;
+        Collisions2D     collisions_2d;
         
         NIT_IF_EDITOR_ENABLED(ImGuiRenderer  im_gui_renderer);
         NIT_IF_EDITOR_ENABLED(Editor editor);

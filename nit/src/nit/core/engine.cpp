@@ -154,6 +154,9 @@ namespace nit
         physics_2d_set_instance(&engine->physics_2d);
         physics_2d_init();
 
+        collisions_2d_set_instance(&engine->collisions_2d);
+        collisions_2d_init();
+
         NIT_IF_EDITOR_ENABLED(register_editor());
         
         register_draw_system();

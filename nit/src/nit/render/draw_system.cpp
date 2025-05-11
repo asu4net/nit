@@ -52,6 +52,7 @@ namespace nit
         engine_get_instance()->asset_registry.asset_destroyed_event    += AssetDestroyedListener::create(on_asset_destroyed);
         engine_get_instance()->entity_registry.component_added_event   += ComponentAddedListener::create(on_component_added);
         engine_get_instance()->entity_registry.component_removed_event += ComponentRemovedListener::create(on_component_removed);
+
         return ListenerAction::StayListening;
     }
 
@@ -94,7 +95,7 @@ namespace nit
             {
                 auto& sprite = entity_get<Sprite>(entity);
                 sprite.sub_texture = current_key.name;
-                sprite.sub_texture_index = current_key.index;
+                sprite.sub_texture_index = animation.current_key;
                 ++animation.current_key;
 
                 if (animation.current_key == flipbook->key_count)
@@ -160,6 +161,15 @@ namespace nit
                 asset_retain(asset);
             }
         }
+        else if (args.type == type_get<FlipBookAnimation>())
+        {
+            auto& asset = entity_get<FlipBookAnimation>(args.entity).flipbook;
+            asset_retarget_handle(asset);
+            if (asset_valid(asset) && !asset_loaded(asset))
+            {
+                asset_retain(asset);
+            }
+        }
         return ListenerAction::StayListening;
     }
 
@@ -183,6 +193,15 @@ namespace nit
             if (asset_valid(asset) && asset_loaded(asset))
             {
                 asset_release(asset);
+            }
+        }
+        else if (args.type == type_get<FlipBookAnimation>())
+        {
+            auto& asset = entity_get<FlipBookAnimation>(args.entity).flipbook;
+            asset_retarget_handle(asset);
+            if (asset_valid(asset) && !asset_loaded(asset))
+            {
+                asset_retain(asset);
             }
         }
         return ListenerAction::StayListening;

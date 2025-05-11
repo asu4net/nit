@@ -69,6 +69,13 @@ namespace nit
         return 0;
     }
 
+    template<typename T>
+    f32 sqrd_distance(const T& a, const T& b)
+    {
+        NIT_CHECK_MSG(false, "Not implemented!");
+        return 0;
+    }
+
     inline bool has_decimals(f32 value)
     {
         f64 int_part;

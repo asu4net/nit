@@ -128,6 +128,12 @@ namespace nit
         return std::sqrtf(std::powf(a.x - b.x, 2) + std::powf(a.y - b.y, 2) + std::powf(a.z - b.z, 2));
     }
 
+    template<>
+    f32 sqrd_distance<Vector3>(const Vector3& a, const Vector3& b)
+    {
+        return std::powf(a.x - b.x, 2) + std::powf(a.y - b.y, 2) + std::powf(a.z - b.z, 2);
+    }
+
     Vector3 to_v3(const Vector2& value)
     {
         return { value.x, value.y, 0.f };
